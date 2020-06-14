@@ -7,10 +7,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class ModificacionProductos extends WindowAdapter implements ActionListener
+import javax.swing.JOptionPane;
+
+public class ModificarProductos extends WindowAdapter implements ActionListener
 {
 
-	ModificacionProductos()
+	ModificarProductos()
 	{
 		Vista.modificacionProducto.setLayout(new FlowLayout());
 		Vista.modificacionProducto.setSize(600, 170);
@@ -55,14 +57,16 @@ public class ModificacionProductos extends WindowAdapter implements ActionListen
 				System.out.println("Error 3-"+e.getMessage());
 			}
 		}
+		
 	}
 
 	public void actionPerformed(ActionEvent evento)
 	{
 		if(evento.getSource().equals(Vista.btnMProdAceptar))
-		{	
-			new ObtenerDatosModProd();
+		{
+			new ModificarProductosDatos();
 		}
+		JOptionPane.showMessageDialog(Vista.modificacionProducto, "Modificación realizada");
 	}
 
 	public void windowClosing(WindowEvent arg0)

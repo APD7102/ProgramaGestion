@@ -7,12 +7,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class AltaProductos extends WindowAdapter implements ActionListener
 {
 
 	AltaProductos()
 	{
-		//Sentencia para recopilar los datos e introducirlos en el choice
+	
 		try
 		{	
 			Vista.choAPProveedorProducto.removeAll();
@@ -22,9 +24,9 @@ public class AltaProductos extends WindowAdapter implements ActionListener
 
 			while(Modelo.rs.next())
 			{
-				String poblarChoice = Integer.toString(Modelo.rs.getInt("idProveedor"));
-				poblarChoice = poblarChoice + "-"+ Modelo.rs.getString("nombreProveedor");
-				Vista.choAPProveedorProducto.add(poblarChoice);
+				String rellenarChoice = Integer.toString(Modelo.rs.getInt("idProveedor"));
+				rellenarChoice = rellenarChoice + "-"+ Modelo.rs.getString("nombreProveedor");
+				Vista.choAPProveedorProducto.add(rellenarChoice);
 			}
 		}
 		catch (SQLException sqle)
@@ -50,7 +52,7 @@ public class AltaProductos extends WindowAdapter implements ActionListener
 		Vista.altaProducto.setResizable(false);
 		Vista.altaProducto.addWindowListener(this);
 		Vista.btnAProdAceptar.addActionListener(this);
-		Vista.btnAProdLimpiar.addActionListener(this);
+		Vista.btnAProdBorrar.addActionListener(this);
 		Vista.altaProducto.add(Vista.lblAPNombreProducto);
 		Vista.altaProducto.add(Vista.txtAPNombreProducto);
 		Vista.altaProducto.add(Vista.lblAPPrecioProducto);
@@ -62,7 +64,7 @@ public class AltaProductos extends WindowAdapter implements ActionListener
 		Vista.altaProducto.add(Vista.lblAPProveedorProducto);
 		Vista.altaProducto.add(Vista.choAPProveedorProducto);
 		Vista.altaProducto.add(Vista.btnAProdAceptar);
-		Vista.altaProducto.add(Vista.btnAProdLimpiar);
+		Vista.altaProducto.add(Vista.btnAProdBorrar);
 		Vista.altaProducto.setLocationRelativeTo(null);
 		Vista.altaProducto.setVisible(true);
 		Vista.txtAPNombreProducto.selectAll();
@@ -76,16 +78,16 @@ public class AltaProductos extends WindowAdapter implements ActionListener
 	public void actionPerformed(ActionEvent evento)
 	{
 
-		// Alta de proveedores
+		// Altas
 
 		if(evento.getSource().equals(Vista.btnAProdAceptar)) 
 		{
 			try
 			{
-				String[] PSeleccionado=Vista.choAPProveedorProducto.getSelectedItem().split("-");
-				String ProveedorProducto = PSeleccionado[0];
+				String[] proveedorElegido=Vista.choAPProveedorProducto.getSelectedItem().split("-");
+				String ProveedorProducto = proveedorElegido[0];
 				Modelo.ConexionBD();
-				Modelo.sentencia = "INSERT INTO productos (nombreProducto,descripcionProducto,stockProducto,precioProducto,idProveedorFK) VALUES ('" + Vista.txtAPNombreProducto.getText()+ "','" + Vista.taAPDescripcionProducto.getText()+ "',"+ Vista.txtAPStockProducto.getText()+","+ Vista.txtAPPrecioProducto.getText()+",'"+ProveedorProducto+"')";
+				Modelo.sentencia = "INSERT INTO productos (nombreProducto,precioProducto,stockProducto,descripcionProducto,idProveedorFK) VALUES ('" + Vista.txtAPNombreProducto.getText()+ "','" + Vista.txtAPPrecioProducto.getText()+ "',"+ Vista.txtAPStockProducto.getText()+",'"+ Vista.taAPDescripcionProducto.getText()+"','"+ProveedorProducto+"')";
 				Modelo.statement.executeUpdate(Modelo.sentencia);
 			}
 
@@ -96,7 +98,7 @@ public class AltaProductos extends WindowAdapter implements ActionListener
 
 			finally
 			{
-				Log.registrarLog("Alta de producto realizada");
+				Log.creacionLog("Alta de producto realizada");
 				try
 				{
 					if(Modelo.connection!=null)
@@ -108,10 +110,11 @@ public class AltaProductos extends WindowAdapter implements ActionListener
 				{
 					System.out.println("Error 3-"+e.getMessage());
 				}
+				JOptionPane.showMessageDialog(Vista.altaProducto, "Alta de producto realizada");
 			}
 
 		}
-		if(evento.getSource().equals(Vista.btnAProdLimpiar)) 
+		if(evento.getSource().equals(Vista.btnAProdBorrar)) 
 		{
 			Vista.txtAPNombreProducto.selectAll();
 			Vista.txtAPNombreProducto.setText("");

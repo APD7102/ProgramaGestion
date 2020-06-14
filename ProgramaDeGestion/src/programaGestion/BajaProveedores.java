@@ -7,6 +7,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class BajaProveedores extends WindowAdapter implements ActionListener
 {
 
@@ -80,10 +82,10 @@ public class BajaProveedores extends WindowAdapter implements ActionListener
 		{
 			try
 			{
-				String[] PSeleccionado=Vista.choBajaProveedor.getSelectedItem().split("-");
+				String[] productoElegido=Vista.choBajaProveedor.getSelectedItem().split("-");
 
 				Modelo.ConexionBD();
-				Modelo.sentencia = "DELETE FROM proveedores WHERE idProveedor = " + Integer.parseInt(PSeleccionado[0]);
+				Modelo.sentencia = "DELETE FROM proveedores WHERE idProveedor = " + Integer.parseInt(productoElegido[0]);
 				Modelo.statement.executeUpdate(Modelo.sentencia);
 			}
 			catch (SQLException sqle)
@@ -92,7 +94,7 @@ public class BajaProveedores extends WindowAdapter implements ActionListener
 			}
 			finally
 			{
-				Log.registrarLog("Baja de proveedor realizada");
+				Log.creacionLog("Baja de proveedor realizada");
 				try
 				{
 					if(Modelo.connection!=null)
@@ -104,9 +106,10 @@ public class BajaProveedores extends WindowAdapter implements ActionListener
 				{
 					System.out.println("Error 3-"+e.getMessage());
 				}
+				JOptionPane.showMessageDialog(Vista.bajaProveedor, "Baja de proveedor realizada");
 			}
 		}
-		else if(evento.getSource().equals(Vista.btnBProvVolver))//Investigar porqué hay que darle al botón 2 veces para que funcione
+		else if(evento.getSource().equals(Vista.btnBProvVolver))
 		{
 			Vista.bajaProveedorConfirmacion.setVisible(false);
 		}

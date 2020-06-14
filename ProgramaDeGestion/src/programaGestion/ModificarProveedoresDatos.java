@@ -7,10 +7,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class ObtenerDatosModProv extends WindowAdapter implements ActionListener
+public class ModificarProveedoresDatos extends WindowAdapter implements ActionListener
 {
 
-	ObtenerDatosModProv()
+	ModificarProveedoresDatos()
 	{
 
 		String nombreProveedor = "";
@@ -19,9 +19,9 @@ public class ObtenerDatosModProv extends WindowAdapter implements ActionListener
 
 		try
 		{
-			int idProElegido = Integer.parseInt(Vista.choModificacionProveedor.getSelectedItem().split("-")[0]);
+			int idProveElegido = Integer.parseInt(Vista.choModificacionProveedor.getSelectedItem().split("-")[0]);
 			Modelo.ConexionBD();
-			Modelo.sentencia = "SELECT * FROM proveedores WHERE idProveedor="+idProElegido;
+			Modelo.sentencia = "SELECT * FROM proveedores WHERE idProveedor="+idProveElegido;
 			Modelo.rs = Modelo.statement.executeQuery(Modelo.sentencia);
 			Modelo.rs.next();
 			//Le doy a los text field los valores extraidos del elemento seleccionado
@@ -98,7 +98,7 @@ public class ObtenerDatosModProv extends WindowAdapter implements ActionListener
 			}
 			finally
 			{
-				Log.registrarLog("Modificacion de proveedor realizada");
+				Log.creacionLog("Modificacion de proveedor realizada");
 				try
 				{
 					if(Modelo.connection!=null)

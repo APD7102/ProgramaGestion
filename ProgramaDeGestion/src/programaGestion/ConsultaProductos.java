@@ -71,7 +71,7 @@ public class ConsultaProductos extends WindowAdapter implements ActionListener
 		}
 		finally
 		{
-			Log.registrarLog("Consulta de producto realizada");
+			Log.creacionLog("Consulta de producto realizada");
 			try
 			{
 				if(Modelo.connection!=null)
@@ -101,7 +101,7 @@ public class ConsultaProductos extends WindowAdapter implements ActionListener
 		{
 			// Se crea el documento 
 			Document documento = new Document();
-			String resultado = "";
+			String exportado = "";
 			try 
 			{
 				try	//Sentencia para recopilar los datos e introducirlos en la variable
@@ -113,7 +113,7 @@ public class ConsultaProductos extends WindowAdapter implements ActionListener
 					Vista.taConsultaProducto.setText("");
 					while(Modelo.rs.next())
 					{
-						resultado = resultado + Modelo.rs.getInt("idProducto")+
+						exportado = exportado + Modelo.rs.getInt("idProducto")+
 								"-"+Modelo.rs.getString("nombreProducto")+
 								"-"+Modelo.rs.getString("precioProducto")+
 								"-"+Modelo.rs.getString("stockProducto")+
@@ -152,7 +152,7 @@ public class ConsultaProductos extends WindowAdapter implements ActionListener
 				titulo.setAlignment(Element.ALIGN_CENTER);
 				documento.add(titulo);
 				// Sacar los datos
-				String[] cadena = resultado.split("\n");
+				String[] cadena = exportado.split("\n");
 				PdfPTable tabla = new PdfPTable(5); // Se indica el número de columnas
 				tabla.setSpacingBefore(5); // Espaciado ANTES de la tabla
 				tabla.addCell("ID");

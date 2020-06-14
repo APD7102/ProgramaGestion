@@ -2,15 +2,15 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itextpdf-5.5.13.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itextpdf-5.5.13.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itextpdf-5.5.13.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itext-pdfa-5.5.13.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itext-pdfa-5.5.13.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itext-pdfa-5.5.13.1-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itext-xtra-5.5.13.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itext-xtra-5.5.13.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/itext-xtra-5.5.13.1-sources.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/mysql-connector-java-8.0.20.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itextpdf-5.5.13.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itextpdf-5.5.13.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itextpdf-5.5.13.1-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itext-pdfa-5.5.13.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itext-pdfa-5.5.13.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itext-pdfa-5.5.13.1-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itext-xtra-5.5.13.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itext-xtra-5.5.13.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alejandro/Desktop/mysql-connector-java-8.0.20/itext-xtra-5.5.13.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

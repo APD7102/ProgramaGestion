@@ -20,41 +20,41 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-public class ConsultaLocales extends WindowAdapter implements ActionListener
+public class ConsultaPanaderias extends WindowAdapter implements ActionListener
 {
 
-	ConsultaLocales()
+	ConsultaPanaderias()
 	{
-		Vista.consultaLocal.setLayout(new FlowLayout());
-		Vista.consultaLocal.setSize(550, 300);
-		Vista.consultaLocal.setResizable(false);
-		Vista.consultaLocal.addWindowListener(this);
-		Vista.btnCLExportarPDF.addActionListener(this);
-		Vista.consultaLocal.add(Vista.lblConsultaLocal);
-		Vista.consultaLocal.add(Vista.taConsultaLocal);
-		Vista.consultaLocal.add(Vista.btnCLExportarPDF);
-		Vista.taConsultaLocal.setEditable(false);
-		Vista.consultaLocal.setLocationRelativeTo(null);
-		Vista.consultaLocal.setVisible(true);
+		Vista.consultarPanaderia.setLayout(new FlowLayout());
+		Vista.consultarPanaderia.setSize(550, 300);
+		Vista.consultarPanaderia.setResizable(false);
+		Vista.consultarPanaderia.addWindowListener(this);
+		Vista.btnCPExportarPDF.addActionListener(this);
+		Vista.consultarPanaderia.add(Vista.lblConsultarPanaderia);
+		Vista.consultarPanaderia.add(Vista.taConsultarPanaderia);
+		Vista.consultarPanaderia.add(Vista.btnCPExportarPDF);
+		Vista.taConsultarPanaderia.setEditable(false);
+		Vista.consultarPanaderia.setLocationRelativeTo(null);
+		Vista.consultarPanaderia.setVisible(true);
 
 		try	//Sentencia para recopilar los datos e introducirlos en el text area
 		{
 			Modelo.ConexionBD();
-			Modelo.sentencia = "SELECT * FROM locales";
+			Modelo.sentencia = "SELECT * FROM panaderias";
 			Modelo.rs = Modelo.statement.executeQuery(Modelo.sentencia);
-			Vista.taConsultaLocal.setText("");
+			Vista.taConsultarPanaderia.setText("");
 			while(Modelo.rs.next())
 			{
-				if(Vista.taConsultaLocal.getText().length()==0)
+				if(Vista.taConsultarPanaderia.getText().length()==0)
 				{
-					Vista.taConsultaLocal.setText(Modelo.rs.getInt("idLocal")+
-							", "+Modelo.rs.getString("direccionLocal"));
+					Vista.taConsultarPanaderia.setText(Modelo.rs.getInt("idPanaderia")+
+							", "+Modelo.rs.getString("direccionPanaderia"));
 				}
 				else
 				{
-					Vista.taConsultaLocal.setText(Vista.taConsultaLocal.getText() + "\n" +
-							Modelo.rs.getInt("idLocal")+
-							", "+Modelo.rs.getString("direccionLocal"));
+					Vista.taConsultarPanaderia.setText(Vista.taConsultarPanaderia.getText() + "\n" +
+							Modelo.rs.getInt("idPanaderia")+
+							", "+Modelo.rs.getString("direccionPanaderia"));
 				}
 			}
 		}
@@ -64,7 +64,7 @@ public class ConsultaLocales extends WindowAdapter implements ActionListener
 		}
 		finally
 		{
-			Log.registrarLog("Consulta de local realizada");
+			Log.creacionLog("Consulta de panaderia realizada");
 			try
 			{
 				if(Modelo.connection!=null)
@@ -81,16 +81,16 @@ public class ConsultaLocales extends WindowAdapter implements ActionListener
 
 	public void windowClosing(WindowEvent arg0)
 	{
-		if(Vista.consultaLocal.isActive())
+		if(Vista.consultarPanaderia.isActive())
 		{
-			Vista.consultaLocal.setVisible(false);
+			Vista.consultarPanaderia.setVisible(false);
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent evento) 
 	{
-		if(evento.getSource().equals(Vista.btnCLExportarPDF)) 
+		if(evento.getSource().equals(Vista.btnCPExportarPDF)) 
 		{
 			// Se crea el documento 
 			Document documento = new Document();
@@ -101,13 +101,13 @@ public class ConsultaLocales extends WindowAdapter implements ActionListener
 
 				{
 					Modelo.ConexionBD();
-					Modelo.sentencia = "SELECT * FROM locales";
+					Modelo.sentencia = "SELECT * FROM panaderias";
 					Modelo.rs = Modelo.statement.executeQuery(Modelo.sentencia);
 					Vista.taConsultaProducto.setText("");
 					while(Modelo.rs.next())
 					{
-						resultado = resultado + Modelo.rs.getInt("idLocal")+
-								"-"+Modelo.rs.getString("direccionLocal")+"\n";
+						resultado = resultado + Modelo.rs.getInt("idPanaderia")+
+								"-"+Modelo.rs.getString("direccionPanaderia")+"\n";
 					}
 
 				}
@@ -130,11 +130,11 @@ public class ConsultaLocales extends WindowAdapter implements ActionListener
 					}
 				}
 				// Se crea el OutputStream para el fichero donde queremos dejar el pdf. 
-				FileOutputStream ficheroPdf = new FileOutputStream("Locales.pdf");
+				FileOutputStream ficheroPdf = new FileOutputStream("Panaderias.pdf");
 				PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(22);
 				// Se abre el documento. 
 				documento.open();
-				Paragraph titulo = new Paragraph("INFORME DE LOCALES", 
+				Paragraph titulo = new Paragraph("INFORME DE PANADERIAS", 
 						FontFactory.getFont("arial", // fuente 
 								22, // tamaño 
 								Font.BOLD, // estilo 
@@ -161,7 +161,7 @@ public class ConsultaLocales extends WindowAdapter implements ActionListener
 				//Abrimos el archivo PDF recién creado 
 				try 
 				{
-					File path = new File ("Locales.pdf"); 
+					File path = new File ("Panaderias.pdf"); 
 					Desktop.getDesktop().open(path); 
 				}
 				catch (IOException ex) 

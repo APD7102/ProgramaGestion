@@ -7,10 +7,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-public class ObtenerDatosModProd extends WindowAdapter implements ActionListener
+public class ModificarProductosDatos extends WindowAdapter implements ActionListener
 {
 
-	ObtenerDatosModProd()
+	ModificarProductosDatos()
 	{
 
 		String nombreProducto = "";
@@ -66,9 +66,9 @@ public class ObtenerDatosModProd extends WindowAdapter implements ActionListener
 
 			while(Modelo.rs.next())
 			{
-				String poblarChoice = Integer.toString(Modelo.rs.getInt("idProveedor"));
-				poblarChoice = poblarChoice + "-"+ Modelo.rs.getString("nombreProveedor");
-				Vista.choMPProveedorProducto.add(poblarChoice);
+				String rellenarChoice = Integer.toString(Modelo.rs.getInt("idProveedor"));
+				rellenarChoice = rellenarChoice + "-"+ Modelo.rs.getString("nombreProveedor");
+				Vista.choMPProveedorProducto.add(rellenarChoice);
 			}
 		}
 		catch (SQLException sqle)
@@ -126,15 +126,15 @@ public class ObtenerDatosModProd extends WindowAdapter implements ActionListener
 			try
 			{
 				int idProdElegido = Integer.parseInt(Vista.choModificacionProducto.getSelectedItem().split("-")[0]);
-				String[] PSeleccionado=Vista.choMPProveedorProducto.getSelectedItem().split("-");
-				String proveedorProducto = PSeleccionado[0];
+				String[] productoElegido=Vista.choMPProveedorProducto.getSelectedItem().split("-");
+				String proveedorProducto = productoElegido[0];
 				String nombre = Vista.txtMPNombreProducto.getText();
 				String precio = Vista.txtMPPrecioProducto.getText();
 				String stock = Vista.txtMPStockProducto.getText();
 				String descripcion = Vista.taMPDescripcionProducto.getText();
 
 				Modelo.ConexionBD();
-				Modelo.sentencia = "UPDATE productos SET nombreProducto = '"+nombre+"', descripcionProducto = '"+descripcion+"', stockProducto = "+stock+", precioProducto = "+precio+", idProveedorFK = "+proveedorProducto+" WHERE idProducto="+idProdElegido;
+				Modelo.sentencia = "UPDATE productos SET nombreProducto = '"+nombre+"', precioProducto = '"+precio+"', stockProducto = "+stock+", descripcionProducto = '"+descripcion+"', idProveedorFK = "+proveedorProducto+" WHERE idProducto="+idProdElegido;
 				Modelo.statement.executeUpdate(Modelo.sentencia);
 			}
 			catch (SQLException sqle)
@@ -143,7 +143,7 @@ public class ObtenerDatosModProd extends WindowAdapter implements ActionListener
 			}
 			finally
 			{
-				Log.registrarLog("Modificación de producto realizada");
+				Log.creacionLog("Modificación de producto realizada");
 				try
 				{
 					if(Modelo.connection!=null)

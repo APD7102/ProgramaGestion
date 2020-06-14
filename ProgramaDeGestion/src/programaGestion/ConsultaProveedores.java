@@ -69,7 +69,7 @@ public class ConsultaProveedores extends WindowAdapter implements ActionListener
 		}
 		finally
 		{
-			Log.registrarLog("Consulta de proveedor realizada");
+			Log.creacionLog("Consulta de proveedor realizada");
 			try
 			{
 				if(Modelo.connection!=null)
@@ -99,7 +99,7 @@ public class ConsultaProveedores extends WindowAdapter implements ActionListener
 		{
 			// Se crea el documento 
 			Document documento = new Document();
-			String resultado = "";
+			String exportado = "";
 			try 
 			{
 				try	//Sentencia para recopilar los datos e introducirlos en la variable
@@ -111,7 +111,7 @@ public class ConsultaProveedores extends WindowAdapter implements ActionListener
 					Vista.taConsultaProducto.setText("");
 					while(Modelo.rs.next())
 					{
-						resultado = resultado + Modelo.rs.getInt("idProveedor")+
+						exportado = exportado + Modelo.rs.getInt("idProveedor")+
 								"-"+Modelo.rs.getString("nombreProveedor")+
 								"-"+Modelo.rs.getString("telefonoProveedor")+
 								"-"+Modelo.rs.getString("nifProveedor")+"\n";
@@ -149,7 +149,7 @@ public class ConsultaProveedores extends WindowAdapter implements ActionListener
 				titulo.setAlignment(Element.ALIGN_CENTER);
 				documento.add(titulo);
 				// Sacar los datos
-				String[] cadena = resultado.split("\n");
+				String[] cadena = exportado.split("\n");
 				PdfPTable tabla = new PdfPTable(4); // Se indica el número de columnas
 				tabla.setSpacingBefore(5); // Espaciado ANTES de la tabla
 				tabla.addCell("ID");

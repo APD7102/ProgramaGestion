@@ -7,6 +7,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class AltaProveedores extends WindowAdapter implements ActionListener
 {
 
@@ -17,7 +19,7 @@ public class AltaProveedores extends WindowAdapter implements ActionListener
 		Vista.altaProveedor.setResizable(false);
 		Vista.altaProveedor.addWindowListener(this);
 		Vista.btnAProvAceptar.addActionListener(this);
-		Vista.btnAProvLimpiar.addActionListener(this);
+		Vista.btnAProvBorrar.addActionListener(this);
 		Vista.altaProveedor.add(Vista.lblAPNombreProveedor);
 		Vista.altaProveedor.add(Vista.txtAPNombreProveedor);
 		Vista.altaProveedor.add(Vista.lblAPTelefonoProveedor);
@@ -25,7 +27,7 @@ public class AltaProveedores extends WindowAdapter implements ActionListener
 		Vista.altaProveedor.add(Vista.lblAPNIFProveedor);
 		Vista.altaProveedor.add(Vista.txtAPNIFProveedor);
 		Vista.altaProveedor.add(Vista.btnAProvAceptar);
-		Vista.altaProveedor.add(Vista.btnAProvLimpiar);
+		Vista.altaProveedor.add(Vista.btnAProvBorrar);
 		Vista.altaProveedor.setLocationRelativeTo(null);
 		Vista.altaProveedor.setVisible(true);
 		Vista.txtAPNombreProveedor.selectAll();
@@ -39,7 +41,7 @@ public class AltaProveedores extends WindowAdapter implements ActionListener
 	public void actionPerformed(ActionEvent evento)
 	{
 
-		// Alta de proveedores
+		//Alta
 
 		if(evento.getSource().equals(Vista.btnAProvAceptar)) 
 		{
@@ -57,7 +59,7 @@ public class AltaProveedores extends WindowAdapter implements ActionListener
 
 			finally
 			{
-				Log.registrarLog("Alta de proveedor realizada");
+				Log.creacionLog("Alta de proveedor realizada");
 				try
 				{
 					if(Modelo.connection!=null)
@@ -69,10 +71,11 @@ public class AltaProveedores extends WindowAdapter implements ActionListener
 				{
 					System.out.println("Error 3-"+e.getMessage());
 				}
+				JOptionPane.showMessageDialog(Vista.altaProveedor, "Alta de proveedor realizada");
 			}
 
 		}
-		if(evento.getSource().equals(Vista.btnAProvLimpiar)) 
+		if(evento.getSource().equals(Vista.btnAProvBorrar)) 
 		{
 			Vista.txtAPNombreProveedor.selectAll();
 			Vista.txtAPNombreProveedor.setText("");

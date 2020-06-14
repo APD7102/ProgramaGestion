@@ -8,9 +8,11 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+import javax.swing.JOptionPane;
+
 public class AltaVentas extends WindowAdapter implements ActionListener
 {
-    LocalDate fecha = LocalDate.now(); // Create a date object
+    LocalDate fecha = LocalDate.now(); 
     String fechaAmericana = (fecha.toString());
     
 	AltaVentas()
@@ -18,16 +20,17 @@ public class AltaVentas extends WindowAdapter implements ActionListener
 		//Sentencia para recopilar los datos e introducirlos en el choice
 		try
 		{	
-			Vista.choAVLocalVenta.removeAll();
+			Vista.choAVPanaderiaVenta.removeAll();
+			Vista.choAVPanaderiaVenta.add("Elige una panaderia");
 			Modelo.ConexionBD();
-			Modelo.sentencia = "SELECT * FROM locales";
+			Modelo.sentencia = "SELECT * FROM panaderias";
 			Modelo.rs = Modelo.statement.executeQuery(Modelo.sentencia);
 
 			while(Modelo.rs.next())
 			{
-				String poblarChoice = Integer.toString(Modelo.rs.getInt("idLocal"));
-				poblarChoice = poblarChoice + "-"+ Modelo.rs.getString("direccionLocal");
-				Vista.choAVLocalVenta.add(poblarChoice);
+				String poblarChoice = Integer.toString(Modelo.rs.getInt("idPanaderia"));
+				poblarChoice = poblarChoice + "-"+ Modelo.rs.getString("direccionPanaderia");
+				Vista.choAVPanaderiaVenta.add(poblarChoice);
 			}
 		}
 		catch (SQLException sqle)
@@ -48,19 +51,20 @@ public class AltaVentas extends WindowAdapter implements ActionListener
 				System.out.println("Error 3-"+e.getMessage());
 			}
 		}
-		//Sentencia para recopilar los datos e introducirlos en el choice
+		
 				try
 				{	
 					Vista.choAVProductoVenta.removeAll();
+					Vista.choAVProductoVenta.add("Elige un producto");
 					Modelo.ConexionBD();
 					Modelo.sentencia = "SELECT * FROM productos";
 					Modelo.rs = Modelo.statement.executeQuery(Modelo.sentencia);
 
 					while(Modelo.rs.next())
 					{
-						String poblarChoice = Integer.toString(Modelo.rs.getInt("idProducto"));
-						poblarChoice = poblarChoice + "-"+ Modelo.rs.getString("nombreProducto");
-						Vista.choAVProductoVenta.add(poblarChoice);
+						String rellenarChoice = Integer.toString(Modelo.rs.getInt("idProducto"));
+						rellenarChoice = rellenarChoice + "-"+ Modelo.rs.getString("nombreProducto");
+						Vista.choAVProductoVenta.add(rellenarChoice);
 					}
 				}
 				catch (SQLException sqle)
@@ -86,63 +90,76 @@ public class AltaVentas extends WindowAdapter implements ActionListener
 		Vista.altaVenta.setResizable(false);
 		Vista.altaVenta.addWindowListener(this);
 		Vista.btnAVAceptar.addActionListener(this);
-		Vista.btnAVLimpiar.addActionListener(this);
-		Vista.altaVenta.add(Vista.lblAVLocalVenta);
-		Vista.altaVenta.add(Vista.choAVLocalVenta);
+		Vista.btnAVBorrar.addActionListener(this);
+		Vista.altaVenta.add(Vista.lblAVPanaderiaVenta);
+		Vista.altaVenta.add(Vista.choAVPanaderiaVenta);
 		Vista.altaVenta.add(Vista.lblAVProductoVenta);
 		Vista.altaVenta.add(Vista.choAVProductoVenta);
 		Vista.altaVenta.add(Vista.lblAVFechaVenta);
 		Vista.altaVenta.add(Vista.txtAVFechaVenta);
 		Vista.altaVenta.add(Vista.btnAVAceptar);
-		Vista.altaVenta.add(Vista.btnAVLimpiar);
+		Vista.altaVenta.add(Vista.btnAVBorrar);
 		Vista.altaVenta.setLocationRelativeTo(null);
 		Vista.altaVenta.setVisible(true);
-		Vista.txtAVFechaVenta.setText(fechaAmericana);
+		
+	    String[] FechaAmericana = fechaAmericana.split("-");
+	    String fechaEuropea = FechaAmericana[2].toString() + "-" + FechaAmericana[1] + "-" + FechaAmericana[0];
+		
+		Vista.txtAVFechaVenta.setText(fechaEuropea);
+		
 	}
 
 	public void actionPerformed(ActionEvent evento)
 	{
 
-		// Alta de proveedores
+		//Alta 
 
 		if(evento.getSource().equals(Vista.btnAVAceptar)) 
 		{
-			try
+			if (Vista.choAVPanaderiaVenta.getSelectedItem().equals("Elige una panaderia") || Vista.choAVProductoVenta.getSelectedItem().equals("Elige un producto")) 
 			{
-
-				String[] LSeleccionado=Vista.choAVLocalVenta.getSelectedItem().split("-");
-				String localVenta = LSeleccionado[0];
-				String[] PSeleccionado=Vista.choAVProductoVenta.getSelectedItem().split("-");
-				String productoVenta = PSeleccionado[0];
-				String[] fechaFormateada = fechaAmericana.split("-");
-				Modelo.ConexionBD();
-				Modelo.sentencia = "INSERT INTO venden (idLocalFK,idProductoFK,fechaVenta) VALUES (" + localVenta+ "," + productoVenta+ ",'"+fechaFormateada[0]+"-"+fechaFormateada[1]+"-"+fechaFormateada[2]+"')";
-				Modelo.statement.executeUpdate(Modelo.sentencia);
+				JOptionPane.showMessageDialog(Vista.altaVenta, "Tienes que elegir una panaderia y un producto");
 			}
-
-			catch (SQLException sqle)
+			else
 			{
-				System.out.println("Error 2-"+sqle.getMessage());
-			}
-
-			finally
-			{
-				Log.registrarLog("Alta de venta realizada");
 				try
 				{
-					if(Modelo.connection!=null)
-					{
-						Modelo.connection.close();
-					}
+
+					String[] panaderiaElegida=Vista.choAVPanaderiaVenta.getSelectedItem().split("-");
+					String panaderiaVenta = panaderiaElegida[0];
+					String[] productoElgido=Vista.choAVProductoVenta.getSelectedItem().split("-");
+					String productoVenta = productoElgido[0];
+					String[] fechaCambiada = fechaAmericana.split("-");
+					Modelo.ConexionBD();
+					Modelo.sentencia = "INSERT INTO venden (idPanaderiaFK,idProductoFK,fechaDeVenta) VALUES (" + panaderiaVenta+ "," + productoVenta+ ",'"+fechaCambiada[0]+"-"+fechaCambiada[1]+"-"+fechaCambiada[2]+"')";
+					Modelo.statement.executeUpdate(Modelo.sentencia);
 				}
-				catch (SQLException e)
+
+				catch (SQLException sqle)
 				{
-					System.out.println("Error 3-"+e.getMessage());
+					System.out.println("Error 2-"+sqle.getMessage());
+				}
+
+				finally
+				{
+					Log.creacionLog("Alta de venta realizada");
+					try
+					{
+						if(Modelo.connection!=null)
+						{
+							Modelo.connection.close();
+						}
+					}
+					catch (SQLException e)
+					{
+						System.out.println("Error 3-"+e.getMessage());
+					}
+					JOptionPane.showMessageDialog(Vista.altaVenta, "Alta de ventas realizada");
 				}
 			}
 
 		}
-		if(evento.getSource().equals(Vista.btnAProdLimpiar)) 
+		if(evento.getSource().equals(Vista.btnAProdBorrar)) 
 		{
 			Vista.txtAVFechaVenta.selectAll();
 			Vista.txtAVFechaVenta.setText("");

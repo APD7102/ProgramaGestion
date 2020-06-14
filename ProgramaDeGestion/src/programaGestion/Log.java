@@ -10,9 +10,9 @@ import java.util.Date;
 
 public class Log
 {
-	public static void registrarLog(String mensaje)
+	public static void creacionLog(String mensaje)
 	{
-		//FileWriter también puede lanzar una excepción 
+		
 		try
 		{
 			String usuario = "";

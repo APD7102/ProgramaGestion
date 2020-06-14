@@ -15,7 +15,7 @@ public class Ayuda
 		}
 		finally
 		{
-			Log.registrarLog("Consulta de ayuda realizada");
+			Log.creacionLog("Consulta de ayuda realizada");
 		}
 
 	}

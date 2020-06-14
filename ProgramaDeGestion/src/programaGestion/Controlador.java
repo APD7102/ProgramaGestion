@@ -1,6 +1,6 @@
 package programaGestion;
 
-import java.awt.Color;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,36 +15,33 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 	
 	static int tipoUsuario = 0;
 	
-	Color colorLogin = new Color(204, 230, 255);
-	Color colorMenu = new Color(153, 255, 204);
-	
 	
 	Controlador()
 	{
-		Color colorLogin = new Color(204, 230, 255);
+		
 		Vista.login.setLayout(new FlowLayout());
 		Vista.login.setSize(315, 130);
 		Vista.login.setResizable(false);
 		Vista.login.setLocationRelativeTo(null);
 		Vista.login.addWindowListener(this);
 		Vista.btnAceptar.addActionListener(this);
-		Vista.btnLimpiar.addActionListener(this);
+		Vista.btnBorrar.addActionListener(this);
 		Vista.login.add(Vista.lblUsuario);
 		Vista.login.add(Vista.txtUsuario);
-		Vista.login.add(Vista.lblClave);
+		Vista.login.add(Vista.lblContraseña);
 		Vista.txtClave.setEchoChar('*');
 		Vista.login.add(Vista.txtClave);
 		Vista.login.add(Vista.btnAceptar);
-		Vista.login.add(Vista.btnLimpiar);
+		Vista.login.add(Vista.btnBorrar);
 		Vista.login.setVisible(true);
-		Vista.login.getContentPane().setBackground(colorLogin);
+		Vista.login.getContentPane();
 
 	}
 
 	// Declaro los eventos que suceden en el login
 	public void actionPerformed(ActionEvent evento)
 	{
-		if(evento.getSource().equals(Vista.btnLimpiar)) 
+		if(evento.getSource().equals(Vista.btnBorrar)) 
 		{
 			Vista.txtUsuario.selectAll();
 			Vista.txtUsuario.setText("");
@@ -55,10 +52,10 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 
 		else if(evento.getSource().equals(Vista.btnAceptar)) 
 		{
-			char[] claveExtraida = Vista.txtClave.getPassword();
-			String clave = new String(claveExtraida);
-			String cadenaEncriptada = Encriptacion.getSHA256(clave);
-			Modelo.sentencia = "SELECT * FROM usuarios WHERE nombreUsuario = '"+ Vista.txtUsuario.getText()+ "'AND claveUsuario = '"+ cadenaEncriptada+"'";
+			char[] contraseña1 = Vista.txtClave.getPassword();
+			String contraseña2 = new String(contraseña1);
+			String contraseñaEncriptada = Encriptacion.getSHA256(contraseña2);
+			Modelo.sentencia = "SELECT * FROM usuarios WHERE nombreUsuario = '"+ Vista.txtUsuario.getText()+ "'AND contraseñaUsuario = '"+ contraseñaEncriptada+"'";
 
 			try
 			{
@@ -82,45 +79,38 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 						Vista.menuPrincipal.addWindowListener(this);
 						Vista.menuPrincipal.setLocationRelativeTo(null);
 						Vista.menuPrincipal.setVisible(true);
-						Vista.menuPrincipal.setJMenuBar(Vista.barraMenu);
-						// Añado el menu Productos
-						Vista.menuProductos.add(Vista.mniProductosAlta);
-						Vista.mniProductosAlta.addActionListener(this);
-						Vista.menuProductos.add(Vista.mniProductosModificacion);
-						Vista.mniProductosModificacion.addActionListener(this);
-						Vista.menuProductos.add(Vista.mniProductosConsulta);
-						Vista.mniProductosConsulta.addActionListener(this);
-						// Añado el menu Proveedores
-						Vista.menuProveedores.add(Vista.mniProveedoresAlta);
-						Vista.mniProveedoresAlta.addActionListener(this);
-						Vista.menuProveedores.add(Vista.mniProveedoresBaja);
-						Vista.mniProveedoresBaja.addActionListener(this);
-						Vista.menuProveedores.add(Vista.mniProveedoresModificacion);
-						Vista.mniProveedoresModificacion.addActionListener(this);
-						Vista.menuProveedores.add(Vista.mniProveedoresConsulta);
-						Vista.mniProveedoresConsulta.addActionListener(this);
-						// Añado el menu Locales
-						Vista.menuLocales.add(Vista.mniLocalesAlta);
-						Vista.mniLocalesAlta.addActionListener(this);
-						Vista.menuLocales.add(Vista.mniLocalesConsulta);
-						Vista.mniLocalesConsulta.addActionListener(this);
-						// Añado el menu Ventas
-						Vista.menuVentas.add(Vista.mniVentasAlta);
-						Vista.mniVentasAlta.addActionListener(this);
-						Vista.menuVentas.add(Vista.mniVentasConsulta);
-						Vista.mniVentasConsulta.addActionListener(this);
-						// Añado el menu Ayuda
-						Vista.menuAyuda.add(Vista.mniAyuda);
-						Vista.mniAyuda.addActionListener(this);
-						// Asigno el menú a la barrra de menú
-						Vista.barraMenu.add(Vista.menuProductos);
-						Vista.barraMenu.add(Vista.menuProveedores);
-						Vista.barraMenu.add(Vista.menuLocales);
-						Vista.barraMenu.add(Vista.menuVentas);
-						Vista.barraMenu.add(Vista.menuAyuda);
-						// Pongo invisible el login
+						Vista.menuPrincipal.setJMenuBar(Vista.barraDeMenu);
+						Vista.menuProductos.add(Vista.ProductosAlta);
+						Vista.ProductosAlta.addActionListener(this);
+						Vista.menuProductos.add(Vista.ProductosModificar);
+						Vista.ProductosModificar.addActionListener(this);
+						Vista.menuProductos.add(Vista.ProductosConsultar);
+						Vista.ProductosConsultar.addActionListener(this);
+						Vista.menuProveedores.add(Vista.ProveedoresAlta);
+						Vista.ProveedoresAlta.addActionListener(this);
+						Vista.menuProveedores.add(Vista.ProveedoresBaja);
+						Vista.ProveedoresBaja.addActionListener(this);
+						Vista.menuProveedores.add(Vista.ProveedoresModificar);
+						Vista.ProveedoresModificar.addActionListener(this);
+						Vista.menuProveedores.add(Vista.ProveedoresConsultar);
+						Vista.ProveedoresConsultar.addActionListener(this);
+						Vista.menuPanaderias.add(Vista.PanaderiasAlta);
+						Vista.PanaderiasAlta.addActionListener(this);
+						Vista.menuPanaderias.add(Vista.PanaderiasConsultar);
+						Vista.PanaderiasConsultar.addActionListener(this);
+						Vista.menuVentas.add(Vista.VentasAlta);
+						Vista.VentasAlta.addActionListener(this);
+						Vista.menuVentas.add(Vista.VentasConsultar);
+						Vista.VentasConsultar.addActionListener(this);
+						Vista.menuAyuda.add(Vista.Ayuda);
+						Vista.Ayuda.addActionListener(this);
+						Vista.barraDeMenu.add(Vista.menuProductos);
+						Vista.barraDeMenu.add(Vista.menuProveedores);
+						Vista.barraDeMenu.add(Vista.menuPanaderias);
+						Vista.barraDeMenu.add(Vista.menuVentas);
+						Vista.barraDeMenu.add(Vista.menuAyuda);
 						Vista.login.setVisible(false);
-						Vista.menuPrincipal.getContentPane().setBackground(colorMenu);
+						Vista.menuPrincipal.getContentPane();
 
 					}
 					else if (tipoUsuario == 2)
@@ -131,31 +121,24 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 						Vista.menuPrincipal.addWindowListener(this);
 						Vista.menuPrincipal.setLocationRelativeTo(null);
 						Vista.menuPrincipal.setVisible(true);
-						Vista.menuPrincipal.setJMenuBar(Vista.barraMenu);
-						// Añado el menu Productos
-						Vista.menuProductos.add(Vista.mniProductosAlta);
-						Vista.mniProductosAlta.addActionListener(this);
-						// Añado el menu Proveedores
-						Vista.menuProveedores.add(Vista.mniProveedoresAlta);
-						Vista.mniProveedoresAlta.addActionListener(this);
-						// Añado el menu Locales
-						Vista.menuLocales.add(Vista.mniLocalesAlta);
-						Vista.mniLocalesAlta.addActionListener(this);
-						// Añado el menu Ventas
-						Vista.menuVentas.add(Vista.mniVentasAlta);
-						Vista.mniVentasAlta.addActionListener(this);
-						// Añado el menu Ayuda
-						Vista.menuAyuda.add(Vista.mniAyuda);
-						Vista.mniAyuda.addActionListener(this);
-						// Asigno el menú a la barrra de menú
-						Vista.barraMenu.add(Vista.menuProductos);
-						Vista.barraMenu.add(Vista.menuProveedores);
-						Vista.barraMenu.add(Vista.menuLocales);
-						Vista.barraMenu.add(Vista.menuVentas);
-						Vista.barraMenu.add(Vista.menuAyuda);
-						// Pongo invisible el login
+						Vista.menuPrincipal.setJMenuBar(Vista.barraDeMenu);
+						Vista.menuProductos.add(Vista.ProductosAlta);
+						Vista.ProductosAlta.addActionListener(this);
+						Vista.menuProveedores.add(Vista.ProveedoresAlta);
+						Vista.ProveedoresAlta.addActionListener(this);
+						Vista.menuPanaderias.add(Vista.PanaderiasAlta);
+						Vista.PanaderiasAlta.addActionListener(this);
+						Vista.menuVentas.add(Vista.VentasAlta);
+						Vista.VentasAlta.addActionListener(this);
+						Vista.menuAyuda.add(Vista.Ayuda);
+						Vista.Ayuda.addActionListener(this);
+						Vista.barraDeMenu.add(Vista.menuProductos);
+						Vista.barraDeMenu.add(Vista.menuProveedores);
+						Vista.barraDeMenu.add(Vista.menuPanaderias);
+						Vista.barraDeMenu.add(Vista.menuVentas);
+						Vista.barraDeMenu.add(Vista.menuAyuda);
 						Vista.login.setVisible(false);
-						Vista.menuPrincipal.getContentPane().setBackground(colorMenu);
+						Vista.menuPrincipal.getContentPane();
 					}
 				}
 
@@ -166,8 +149,8 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 					Vista.errorLogin.setResizable(false);
 					Vista.errorLogin.addWindowListener(this);
 					Vista.errorLogin.add(Vista.lblErrorLogin);
-					Vista.btnELVolver.addActionListener(this);
-					Vista.errorLogin.add(Vista.btnELVolver);
+					Vista.btnErrorLoginVolver.addActionListener(this);
+					Vista.errorLogin.add(Vista.btnErrorLoginVolver);
 					Vista.errorLogin.setLocationRelativeTo(null);
 					Vista.errorLogin.setVisible(true);
 
@@ -181,7 +164,7 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 
 			finally
 			{
-				Log.registrarLog("Conexión de usuario realizada");
+				Log.creacionLog("Conexión de usuario realizada");
 				try
 				{
 					if(Modelo.connection!=null)
@@ -197,62 +180,62 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 		}
 
 		// Alta de productos
-		else if(evento.getSource().equals(Vista.mniProductosAlta)) 
+		else if(evento.getSource().equals(Vista.ProductosAlta)) 
 		{
 			new AltaProductos();
 		}
 		// Modificacion de productos
-		else if(evento.getSource().equals(Vista.mniProductosModificacion)) 
+		else if(evento.getSource().equals(Vista.ProductosModificar)) 
 		{
-			new ModificacionProductos();
+			new ModificarProductos();
 		}
 		// Consulta de productos;
-		else if(evento.getSource().equals(Vista.mniProductosConsulta)) 
+		else if(evento.getSource().equals(Vista.ProductosConsultar)) 
 		{
 			new ConsultaProductos();
 		}
 		// Alta de proveedores
-		else if(evento.getSource().equals(Vista.mniProveedoresAlta)) 
+		else if(evento.getSource().equals(Vista.ProveedoresAlta)) 
 		{
 			new AltaProveedores();
 		}
 		// Baja de proveedores
-		else if(evento.getSource().equals(Vista.mniProveedoresBaja)) 
+		else if(evento.getSource().equals(Vista.ProveedoresBaja)) 
 		{
 			new BajaProveedores(); 
 		}
 		// Modificacion de proveedores
-		else if(evento.getSource().equals(Vista.mniProveedoresModificacion)) 
+		else if(evento.getSource().equals(Vista.ProveedoresModificar)) 
 		{
-			new ModificacionProveedores();
+			new ModificarProveedores();
 		}
 		// Consulta de proveedores;
-		else if(evento.getSource().equals(Vista.mniProveedoresConsulta)) 
+		else if(evento.getSource().equals(Vista.ProveedoresConsultar)) 
 		{
 			new ConsultaProveedores();
 		}	
 		// Alta de locales
-		else if(evento.getSource().equals(Vista.mniLocalesAlta)) 
+		else if(evento.getSource().equals(Vista.PanaderiasAlta)) 
 		{
-			new AltaLocales();
+			new AltaPanaderias();
 		}
 		// Consulta de locales;
-		else if(evento.getSource().equals(Vista.mniLocalesConsulta)) 
+		else if(evento.getSource().equals(Vista.PanaderiasConsultar)) 
 		{
-			new ConsultaLocales();
+			new ConsultaPanaderias();
 		}
 		// Alta de ventas
-		else if(evento.getSource().equals(Vista.mniVentasAlta)) 
+		else if(evento.getSource().equals(Vista.VentasAlta)) 
 		{
 			new AltaVentas();
 		}
 		// Consulta de ventas;
-		else if(evento.getSource().equals(Vista.mniVentasConsulta)) 
+		else if(evento.getSource().equals(Vista.VentasConsultar)) 
 		{
 			new ConsultaVentas();
 		}
 		// Botón de ayuda;
-		else if(evento.getSource().equals(Vista.mniAyuda)) 
+		else if(evento.getSource().equals(Vista.Ayuda)) 
 		{
 			new Ayuda();
 		}
@@ -271,7 +254,7 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 		}
 		else
 		{
-			Log.registrarLog("Salida del programa");
+			Log.creacionLog("Salida del programa");
 			System.exit(0);
 		}
 	}
