@@ -24,20 +24,17 @@ public class Log
 			{
 				usuario = "Usuario";
 			}
-			// Destino de los datos
-			FileWriter fw = new FileWriter("Registro.log", true);
-			// Buffer de escritura
+			FileWriter fw = new FileWriter("Log.log", true);
 			BufferedWriter bw = new BufferedWriter(fw);
-			// Objeto para la escritura
+			// Objeto
 			PrintWriter salida = new PrintWriter(bw);
-			// Guardamos la fecha y hora actuales
 			Date fechaHoraActual = new Date();
-			// Formato deseado
+			// Formato del log
 			DateFormat fechaHoraFormato = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			salida.print("["+fechaHoraFormato.format(fechaHoraActual)+"]");
 			salida.print("["+usuario+"]");
 			salida.println("["+mensaje+"]");
-			// Cerrar el objeto salida, el objeto bw y el fw
+			salida.println("["+Modelo.sentencia+"]");
 			salida.close();
 			bw.close();
 			fw.close();
