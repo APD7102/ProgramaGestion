@@ -74,7 +74,7 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 					if (tipoUsuario == 1)
 					{
 						Vista.menuPrincipal.setLayout(new FlowLayout());
-						Vista.menuPrincipal.setSize(800, 400);
+						Vista.menuPrincipal.setSize(500, 250);
 						Vista.menuPrincipal.setResizable(false);
 						Vista.menuPrincipal.addWindowListener(this);
 						Vista.menuPrincipal.setLocationRelativeTo(null);
@@ -116,7 +116,7 @@ public class Controlador extends JFrame implements ActionListener, WindowListene
 					else if (tipoUsuario == 2)
 					{
 						Vista.menuPrincipal.setLayout(new FlowLayout());
-						Vista.menuPrincipal.setSize(800, 400);
+						Vista.menuPrincipal.setSize(500, 250);
 						Vista.menuPrincipal.setResizable(false);
 						Vista.menuPrincipal.addWindowListener(this);
 						Vista.menuPrincipal.setLocationRelativeTo(null);
